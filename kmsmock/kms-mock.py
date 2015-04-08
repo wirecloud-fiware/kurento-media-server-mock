@@ -45,6 +45,7 @@ class KurMockServer(WebSocket):
     dir_id = None
 
     pids = []
+    send_event = False
 
     def send(self, msg):
         print_with_color("[-] %s" % msg, colors.get("BLUE"))
