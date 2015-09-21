@@ -66,9 +66,11 @@ class KurMockServer(WebSocket):
             "type": "MYOWN_ERROR"}, "message": "This is an error"}}
 
     def onEvent(self, i, source, typ, obj, subs):
-        level = {typ[13:].lower() + "Level": 3}
-        perc = {typ[13:].lower() + "Percentage": 80.0}
-        dr = {'directionAngle': 20.0}
+        levelperc_admit = ["occupancy", "fluidity"]
+        typename = typ[13:].lower()
+        level = {typename + "Level": 3} if typename in levelperc_admit else {}
+        perc = {typename + "Percentage": 80.0} if typename in levelperc_admit else {}
+        dr = {'directionAngle': 20.0} if typename == "direction" else {}
         v = {"id": i, "jsonrpc": "2.0", "method": "onEvent", "params": {'value': {}}}
         par = {'object': obj, 'subscription': subs, 'type': typ, 'data': {
             'source': source, 'type': typ, 'roiID': 'roi1'}}
